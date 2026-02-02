@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Mini Quiz</title>
+    <link rel="stylesheet" href="styleGemini.css">
+    <style>
+        /* style.css */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            padding: 50px;
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+
+        .quiz-container {
+            max-width: 2000px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+
+        
+        .puzzle-images {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .puzzle-images img {
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .question-block {
+            margin-bottom: 15px;
+            padding: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 50px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .correct { color: #2ecc71; }
+        .wrong { color: #e74c3c; }
+
+        .questions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        @media (max-width: 1000px) {
+            .questions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <h1 class="page-title">Quiz for Hint</h1>
+    <div class="puzzle-images">
+        <img src="assets/images/fruitQuiz1.jpg" alt="Fruit Quiz Part 1">
+        <img src="assets/images/fruitQuiz2.jpg" alt="Fruit Quiz Part 2">
+    </div>
+
+    <div class="quiz-container">
+
+        <hr>
+
+        <div class="questions">
+            <div class="question-block" id="q1-container">
+                <p>1. ลุงเก่งเป็นเจ้าของถุงผลไม้ถุงที่เท่าใด</p>
+                <div class="input-group">
+                    <input type="text" id="ans1" placeholder="Your answer...">
+                    <button onclick="checkAnswer(1, '5')">Submit</button>
+                </div>
+                <p class="feedback" id="feedback1"></p>
+            </div>
+
+            <div class="question-block" id="q2-container">
+                <p>2. พี่เจนเป็นเจ้าของถุงผลไม้ถุงที่เท่าใด</p>
+                <div class="input-group">
+                    <input type="text" id="ans2" placeholder="Your answer...">
+                    <button onclick="checkAnswer(2, '2')">Submit</button>
+                </div>
+                <p class="feedback" id="feedback2"></p>
+            </div>
+
+            <div class="question-block" id="q3-container">
+                <p>3. ป้าเช้งเป็นเจ้าของถุงผลไม้ถุงที่เท่าใด</p>
+                <div class="input-group">
+                    <input type="text" id="ans3" placeholder="Your answer...">
+                    <button onclick="checkAnswer(3, '8')">Submit</button>
+                </div>
+                <p class="feedback" id="feedback3"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(questionNum, correctValue) {
+    const userInput = document.getElementById(`ans${questionNum}`).value.trim().toLowerCase();
+    const feedbackElement = document.getElementById(`feedback${questionNum}`);
+
+    if (userInput === correctValue.toLowerCase()) {
+        feedbackElement.textContent = "Correct! ✓";
+        feedbackElement.className = "feedback correct";
+        // Optional: Disable input once correct
+        document.getElementById(`ans${questionNum}`).disabled = true;
+    } else {
+        feedbackElement.textContent = "Incorrect. Time -5%!";
+        feedbackElement.className = "feedback wrong";
+    }
+}
+    </script>
+</div>
+</body>
+</html>

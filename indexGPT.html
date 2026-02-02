@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fruit Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .image-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .image-container img {
+      max-width: 45%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .question {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .question input {
+      padding: 6px;
+      margin-right: 10px;
+      width: 100px;
+    }
+
+    .question button {
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .wrong {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Images -->
+  <div class="image-container">
+    <img src="assets/images/fruitQuiz1.jpg" alt="Fruit Quiz 1">
+    <img src="assets/images/fruitQuiz2.jpg" alt="Fruit Quiz 2">
+  </div>
+
+  <!-- Question 1 -->
+  <div class="question">
+    <p>1. What is A?</p>
+    <input type="text" id="answerA">
+    <button onclick="checkAnswer('A', '1')">Submit</button>
+    <div class="result" id="resultA"></div>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="question">
+    <p>2. What is B?</p>
+    <input type="text" id="answerB">
+    <button onclick="checkAnswer('B', '2')">Submit</button>
+    <div class="result" id="resultB"></div>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="question">
+    <p>3. What is C?</p>
+    <input type="text" id="answerC">
+    <button onclick="checkAnswer('C', '3')">Submit</button>
+    <div class="result" id="resultC"></div>
+  </div>
+
+  <script>
+    function checkAnswer(question, correctAnswer) {
+      const input = document.getElementById("answer" + question);
+      const result = document.getElementById("result" + question);
+
+      if (input.value.trim() === correctAnswer) {
+        result.textContent = "Correct!";
+        result.className = "result correct";
+      } else {
+        result.textContent = "Wrong answer";
+        result.className = "result wrong";
+      }
+    }
+  </script>
+
+</body>
+</html>

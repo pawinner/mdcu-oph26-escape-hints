@@ -110,6 +110,12 @@
             margin-top: 10px;
             font-weight: bold;
             font-size: 1.4em;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+
+        .fade-out {
+            opacity: 0;
         }
 
         .correct { color: #2ecc71; }
@@ -171,6 +177,8 @@
     </div>
 
     <script>
+        const correctSound = new Audio("https://www.myinstants.com/media/sounds/correcto_Xgyp04B.mp3");
+        const wrongSound = new Audio("https://www.myinstants.com/media/sounds/incorrect-buzzer-noise.mp3");
         function checkAnswer(questionNum, correctValue) {
     const userInput = document.getElementById(`ans${questionNum}`).value.trim().toLowerCase();
     const feedbackElement = document.getElementById(`feedback${questionNum}`);
@@ -178,11 +186,26 @@
     if (userInput === correctValue.toLowerCase()) {
         feedbackElement.textContent = "Correct! ✓";
         feedbackElement.className = "feedback correct";
+        correctSound.currentTime = 0;
+        correctSound.play();
         // Optional: Disable input once correct
         document.getElementById(`ans${questionNum}`).disabled = true;
     } else {
         feedbackElement.textContent = "Incorrect. Time -5%!";
         feedbackElement.className = "feedback wrong";
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+
+        // Fade out incorrect text after 5 seconds
+        setTimeout(() => {
+            feedbackElement.classList.add("fade-out");
+        }, 5000);
+
+        // Clear text after fade animation completes
+        setTimeout(() => {
+            feedbackElement.textContent = "";
+            feedbackElement.className = "feedback";
+        }, 5800);
     }
 }
     </script>

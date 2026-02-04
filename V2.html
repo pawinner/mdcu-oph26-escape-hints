@@ -133,6 +133,14 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        body.flash-green {
+            background-color: #2ecc71;
+        }
+
+        body.flash-red {
+            background-color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -180,6 +188,19 @@
     <script>
         const correctSound = new Audio("https://www.myinstants.com/media/sounds/correcto_Xgyp04B.mp3");
         const wrongSound = new Audio("https://www.myinstants.com/media/sounds/incorrect-buzzer-noise.mp3");
+        function flashBackground(type) {
+            document.body.style.transition = "background-color 0.4s ease";
+            if (type === "green") {
+                document.body.classList.add("flash-green");
+            } else if (type === "red") {
+                document.body.classList.add("flash-red");
+            }
+
+            setTimeout(() => {
+                document.body.style.transition = "background-color 1.5s ease";
+                document.body.classList.remove("flash-green", "flash-red");
+            }, 5000);
+        }
         function checkAnswer(questionNum, correctValue) {
     const userInput = document.getElementById(`ans${questionNum}`).value.trim().toLowerCase();
     const feedbackElement = document.getElementById(`feedback${questionNum}`);
@@ -189,6 +210,7 @@
         feedbackElement.className = "feedback correct";
         correctSound.currentTime = 0;
         correctSound.play();
+        flashBackground("green");
         // Optional: Disable input once correct
         document.getElementById(`ans${questionNum}`).disabled = true;
     } else {
@@ -196,6 +218,7 @@
         feedbackElement.className = "feedback wrong";
         wrongSound.currentTime = 0;
         wrongSound.play();
+        flashBackground("red");
 
         // Fade out incorrect text after 5 seconds
         setTimeout(() => {

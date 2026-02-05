@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz for Hint</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1625/1625048.png">
+    <style>
+        @font-face {
+            font-family: "ChulaCharasNew";
+            src: url("assets/fonts/ChulaCharasNewReg.woff2") format("woff2");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "ChulaCharasNew";
+            src: url("assets/fonts/ChulaCharasNewBold.woff2") format("woff2");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        /* style.css */
+        body {
+            font-family: "ChulaCharasNew", system-ui, sans-serif;
+            background-color: #f4f4f9;
+            padding: 30px;
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+        }
+
+        .quiz-container {
+            max-width: 2000px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+
+        
+        .puzzle-images {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .puzzle-images img {
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .question-block {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .question-log {
+            width: 100%;
+            border-top: 2px solid #eee;
+            padding-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .question-log h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.6em;
+            color: #555;
+        }
+
+        .question-log ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .question-log li {
+            margin-bottom: 6px;
+        }
+
+        .question-block p {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            font-family: "ChulaCharasNew";
+            font-size: 1.1rem;
+            padding: 10px;
+            width: 50px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+
+        button {
+            font-family: "ChulaCharasNew";
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.4em;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .correct { color: #2ecc71; }
+        .wrong { color: #e74c3c; }
+
+        .questions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        @media (max-width: 1000px) {
+            .questions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        body.flash-green {
+            background-color: #2ecc71;
+        }
+
+        body.flash-red {
+            background-color: #e74c3c;
+        }
+
+        .quiz-inner {
+            display: flex;
+            gap: 25px;
+        }
+
+        .combined-log {
+            width: 260px;
+            border-right: 2px solid #eee;
+            padding-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .combined-log h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .combined-log ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .combined-log li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <h1 class="page-title">Quiz for Hint</h1>
+    <div class="puzzle-images">
+        <img src="assets/images/fruitQuiz1.jpg" alt="Fruit Quiz Part 1">
+        <img src="assets/images/fruitQuiz2.jpg" alt="Fruit Quiz Part 2">
+    </div>
+
+    <div class="quiz-container">
+
+        <hr>
+
+        <div class="quiz-inner">
+            <div class="combined-log">
+                <h4>Log</h4>
+                <ul id="globalLog"></ul>
+            </div>
+
+            <div class="questions">
+                <div class="question-block" id="q1-container">
+                    <div class="question-content">
+                        <p>1. ลุงเก่งเป็นเจ้าของถุงผลไม้ถุงที่เท่าใด</p>
+                        <div class="input-group">
+                            <input type="text" id="ans1" placeholder="Your answer...">
+                            <button onclick="checkAnswer(1, '5')">Submit</button>
+                        </div>
+                    </div>
+                    <p class="feedback" id="feedback1"></p>
+                </div>
+
+                <div class="question-block" id="q2-container">
+                    <div class="question-content">
+                        <p>2. พี่เจนเป็นเจ้าของถุงผลไม้ถุงที่เท่าใด</p>
+                        <div class="input-group">
+                            <input type="text" id="ans2" placeholder="Your answer...">
+                            <button onclick="checkAnswer(2, '2')">Submit</button>
+                        </div>
+                    </div>
+                    <p class="feedback" id="feedback2"></p>
+                </div>
+
+                <div class="question-block" id="q3-container">
+                    <div class="question-content">
+                        <p>3. ป้าเช้งเป็นเจ้าของถุงผลไม้ถุงที่เท่าใด</p>
+                        <div class="input-group">
+                            <input type="text" id="ans3" placeholder="Your answer...">
+                            <button onclick="checkAnswer(3, '8')">Submit</button>
+                        </div>
+                    </div>
+                    <p class="feedback" id="feedback3"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctSound = new Audio("https://www.myinstants.com/media/sounds/correcto_Xgyp04B.mp3");
+        const wrongSound = new Audio("https://www.myinstants.com/media/sounds/incorrect-buzzer-noise.mp3");
+        function flashBackground(type) {
+            document.body.style.transition = "background-color 0.4s ease";
+            if (type === "green") {
+                document.body.classList.add("flash-green");
+            } else if (type === "red") {
+                document.body.classList.add("flash-red");
+            }
+
+            setTimeout(() => {
+                document.body.style.transition = "background-color 1.5s ease";
+                document.body.classList.remove("flash-green", "flash-red");
+            }, 5000);
+        }
+        function checkAnswer(questionNum, correctValue) {
+    const userInput = document.getElementById(`ans${questionNum}`).value.trim().toLowerCase();
+    const feedbackElement = document.getElementById(`feedback${questionNum}`);
+    const logList = document.getElementById("globalLog");
+
+    if (userInput === correctValue.toLowerCase()) {
+        feedbackElement.textContent = "Correct! ✓";
+        const li = document.createElement("li");
+        li.textContent = `Q${questionNum}: ${feedbackElement.textContent}`;
+        logList.appendChild(li);
+        feedbackElement.className = "feedback correct";
+        correctSound.currentTime = 0;
+        correctSound.play();
+        flashBackground("green");
+        // Optional: Disable input once correct
+        document.getElementById(`ans${questionNum}`).disabled = true;
+    } else {
+        feedbackElement.textContent = "Incorrect. Time -5%!";
+        const li = document.createElement("li");
+        li.textContent = `Q${questionNum}: ${feedbackElement.textContent}`;
+        logList.appendChild(li);
+        feedbackElement.className = "feedback wrong";
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+        flashBackground("red");
+
+        // Fade out incorrect text after 5 seconds
+        setTimeout(() => {
+            feedbackElement.classList.add("fade-out");
+        }, 5000);
+
+        // Clear text after fade animation completes
+        setTimeout(() => {
+            feedbackElement.textContent = "";
+            feedbackElement.className = "feedback";
+        }, 5800);
+    }
+}
+    </script>
+</div>
+</body>
+</html>
